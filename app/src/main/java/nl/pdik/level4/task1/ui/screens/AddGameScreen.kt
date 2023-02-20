@@ -49,8 +49,8 @@ fun AddGameScreen(navController: NavController, viewModel: GameViewModel) {
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                val newGame = createGame(context, title, platform, day, month, year)!!
-                if (newGame.title.isNotEmpty()) {
+                val newGame = createGame(context, title, platform, day, month, year)
+                if (newGame != null && newGame.title.isNotEmpty()) {
                     viewModel.insertGame(newGame)
                     navController.popBackStack()
                 }
@@ -144,13 +144,14 @@ private fun createGame(
     year: String
 ): Game? {
 
-    val realease: Date;
+    val realease: Date?;
     //validate the passed fields and create a game object
-    if (validate(title) && validate(platform) && validate(day) && validate(month) && validate(year)) {
-        realease = Utils.dayMonthYearToDate(day, month, year)!!
-        return Game(title, platform, realease);
-    }
-    return null;
+    if (!validate(title) && validate(platform) && validate(day) && validate(month) && validate(year)) return null;
+
+    realease = Utils.dayMonthYearToDate(day, month, year);
+    if (realease == null) return null;
+    return Game(title, platform, realease);
+
 }
 
 private fun validate(attribute: Any): Boolean {
