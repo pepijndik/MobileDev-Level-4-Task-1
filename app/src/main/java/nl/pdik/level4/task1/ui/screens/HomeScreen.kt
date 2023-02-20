@@ -103,12 +103,15 @@ fun Games(
     scaffoldState: ScaffoldState
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth().padding(top = 12.dp, start = 4.dp, end = 4.dp)
+        modifier = modifier
     ) {
 
-        items(items = games, itemContent = { game ->
+        items(
+
+            items = games,
+            itemContent = { game ->
             GameCard(context, game, scaffoldState)
-        })
+        },)
     }
 
 }
@@ -147,7 +150,7 @@ fun GameCard(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(8.dp, 8.dp)
                 ) {
                     Text(
                         text = game.title,
