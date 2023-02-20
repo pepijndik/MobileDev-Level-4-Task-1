@@ -6,11 +6,19 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.navigation.compose.composable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import nl.pdik.level4.task1.ui.screens.HomeScreen
+import nl.pdik.level4.task1.ui.screens.Screen
 import nl.pdik.level4.task1.ui.theme.MADLevel4Task1Theme
+import nl.pdik.level4.task1.viewmodel.GameViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,22 +30,39 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+private fun GameRoomNavHost(
+    navController: NavHostController, modifier: Modifier
+) {
+    val context = LocalContext.current
+    val viewModel: GameViewModel = viewModel()
+    NavHost(
+        navController = navController,
+        startDestination = Screen.HomeScreen.route,
+    ) {
+        composable(route = Screen.HomeScreen.route)
+        {
+            HomeScreen(navController = navController, viewModel = viewModel)
+        }
+        composable(Screen.AddGameScreen.route) {
+        }
+    }
+
 }
+
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MADLevel4Task1Theme {
-        Greeting("Android")
+
     }
 }
