@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
-                    GameRoomNavHost(navController, Modifier.padding(16.dp));
+                    GameRoomNavHost(navController, Modifier);
                 }
             }
         }
@@ -68,6 +68,8 @@ private fun GameRoomNavHost(
 @Composable
 fun DefaultPreview() {
     MADLevel4Task1Theme {
-
+        val navController = rememberNavController()
+        val viewModel: GameViewModel = viewModel()
+        HomeScreen(navController =navController , viewModel =viewModel )
     }
 }
