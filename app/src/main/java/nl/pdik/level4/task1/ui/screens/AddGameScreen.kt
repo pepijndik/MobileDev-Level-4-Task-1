@@ -143,14 +143,14 @@ private fun createGame(
     month: String,
     year: String
 ): Game? {
-
-    val realease: Date?;
     //validate the passed fields and create a game object
     if (!validate(title) && validate(platform) && validate(day) && validate(month) && validate(year)) return null;
 
-    realease = Utils.dayMonthYearToDate(day, month, year);
-    if (realease == null) return null;
-    return Game(title, platform, realease);
+    try {
+        return Game(title, platform, Utils.dayMonthYearToDate(day, month, year)!!);
+    } catch (ex: java.text.ParseException) {
+        return null;
+    }
 
 }
 
